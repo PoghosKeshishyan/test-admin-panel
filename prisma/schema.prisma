@@ -1,0 +1,183 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                      String               @id @default(uuid())
+  username                String
+  password                String
+  createdHeaderContent    Header_content[]
+  createdNavbar           Navbar[]
+  createdSlider           Slider[]
+  createdSliderControl    Slider_control[]
+  createdAboutUsContent   About_us_content[]
+  createdGalleryHeading   Gallery_heading[]
+  createdGallery          Gallery[]
+  createdReviewsHeading   Reviews_heading[]
+  createdReview           Review[]
+  createdContactUsContent Contact_us_content[]
+  createdCollectionFiles  Collection_files[]
+  createdFooter           Footer[]
+}
+
+model Header_content {
+  id                 String   @id @default(uuid())
+  logo               String
+  menubar_icon_url   String
+  languages_icon_url String
+  languages          String
+  user               User     @relation(fields: [authorId], references: [id])
+  authorId           String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Navbar {
+  id        String   @id @default(uuid())
+  lang      String
+  url       String
+  title     String
+  user      User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Slider {
+  id        String   @id @default(uuid())
+  lang      String
+  title     String
+  vid_url   String
+  descr     String
+  btn_text  String
+  btn_url   String
+  user      User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Slider_control {
+  id                String   @id @default(uuid())
+  prev_btn_icon_url String
+  next_btn_icon_url String
+  user              User     @relation(fields: [authorId], references: [id])
+  authorId          String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model About_us_content {
+  id          String   @id @default(uuid())
+  lang        String
+  heading     String
+  vid_url     String
+  vid_text    String
+  sub_heading String
+  descr       String
+  btn_text    String
+  btn_url     String
+  user        User     @relation(fields: [authorId], references: [id])
+  authorId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Gallery_heading {
+  id        String   @id @default(uuid())
+  lang      String
+  heading   String
+  user      User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Gallery {
+  id        String   @id @default(uuid())
+  lang      String
+  discount  String?
+  img_url   String
+  title     String
+  price     Float
+  user      User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Reviews_heading {
+  id        String   @id @default(uuid())
+  lang      String
+  title     String
+  user      User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  lang      String
+  img_url   String
+  name      String
+  review    String
+  user      User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Contact_us_content {
+  id                           String   @id @default(uuid())
+  lang                         String
+  heading                      String
+  img_url                      String
+  map_url                      String
+  map_text                     String
+  form_heading                 String
+  form_input_name_placeholder  String
+  form_input_email_placeholder String
+  form_textarea_placeholder    String
+  btn_text                     String
+  message_send_ok              String
+  message_send_error           String
+  user                         User     @relation(fields: [authorId], references: [id])
+  authorId                     String
+  createdAt                    DateTime @default(now())
+  updatedAt                    DateTime @updatedAt
+}
+
+model Collection_files {
+  id        String   @id @default(uuid())
+  folder    String
+  file_url  String
+  user      User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Footer {
+  id        String   @id @default(uuid())
+  lang      String
+  title     String
+  links     String
+  user      User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}
